@@ -9,19 +9,17 @@ int main()
     printf("Entre com um numero inteiro e positivo: ");
     scanf("%d", &n);
 
-    printf("O resultado e: %d", valores(n));
+    valores(n);
 
     return 0;
 }
 
 int valores(int n)
 {
-    int res;
-
-    if (n == 0) {
+    if (n < 0) {
         return n;
     }
 
-    res = n + valores(n-1);
-    return res;
+    printf("%d\n", n);
+    n = n + valores(n-1);
 }
