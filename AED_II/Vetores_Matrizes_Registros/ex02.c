@@ -1,104 +1,97 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
-typedef struct
-{
-    double salario;
-    int num_filhos;
-} Prefeitura;
+typedef struct{
+    float salario;
+    int numFilhos;
+} Pessoa;
 
-void inserePrefeitura(Prefeitura *registro, double salario, int num_filhos);
-void imprimePrefeitura(Prefeitura registro[], int tam);
-void mediaSalario(Prefeitura registro[], int tam);
-void media_numFilhos(Prefeitura registro[], int tam);
-Prefeitura maiorSalario(Prefeitura *registro, int tam);
-void percentual(Prefeitura registro[], int tam);
+void registraPessoasAleatorias(Pessoa *p, int tam);
+void imprimePessoas(Pessoa *p, int tam);
+void mediaSalario(Pessoa *pessoas, int tam, float *mediaSal);
+void mediaFilho(Pessoa *pessoas, int tam, int *mediaFilhos);
+void maiorSalario(Pessoa *pessoas, int tam, float *maiorSal);
+void percentualSalario(Pessoa *pessoas, int tam, float *percentual, float salBase);
+void senso(Pessoa *pessoas, int tam, float *mediaSal, int *mediaFilhos, float
+*maiorSal, float *percentual);
 
-int main()
-{
-    Prefeitura registro[6];
-    inserePrefeitura(&registro[0], 1500.30, 2);
-    inserePrefeitura(&registro[1], 2600.72, 3);
-    inserePrefeitura(&registro[2], 3100, 0);
-    inserePrefeitura(&registro[3], 10200, 4);
-    inserePrefeitura(&registro[4], 350, 1);
-    inserePrefeitura(&registro[5], 7453.29, 1);
+int main () {
 
-    // imprimePrefeitura(registro, 6);
-    mediaSalario(registro, 6);
-    media_numFilhos(registro, 6);
-    Prefeitura maior = maiorSalario(registro, 6);
-    printf("O maior salario e de: %.2f\n", maior.salario);
-    percentual(registro, 6);
+    int tamSenso, mediaFilhos = 0;
+    float mediaSal = 0, maiorSal = 0, percentual = 0;
+    printf("Digite quantas pessoas irao participar do senso: ");
+    scanf("%d", &tamSenso);
+
+    Pessoa pessoas[tamSenso];
+
+    srand(time(NULL));
+
+    registraPessoasAleatorias(pessoas, tamSenso);
+    imprimePessoas(pessoas, tamSenso);
+    senso(pessoas, tamSenso, &mediaSal, &mediaFilhos, &maiorSal, &percentual);
+
+    printf("Dados do senso:\n");
+    printf("Salario medio: %.2f\n", mediaSal);
+    printf("Quantidade media de filhos (arredondado): %d\n", mediaFilhos);
+    printf("Maior salario da populacao: %.2f\n", maiorSal);
+    printf("Percentual de pessoas que ganham menos de RS 350,00: %.2f%%\n\n", percentual);
+
+    return 0;
 }
 
-void inserePrefeitura(Prefeitura *registro, double salario, int num_filhos)
-{
-    registro->salario = salario;
-    registro->num_filhos = num_filhos;
-}
-
-void imprimePrefeitura(Prefeitura registro[], int tam)
-{
-    for (int i = 0; i < tam; i++)
-    {
-        printf("Salario: %.2f, Numero de Filhos: %d\n", registro[i].salario, registro[i].num_filhos);
+void registraPessoasAleatorias(Pessoa *p, int tam) {
+    for (int i = 0; i < tam; i ++) {
+        p[i].salario = rand() % 700;
+        p[i].numFilhos = rand() % 5;
     }
-    printf("\n");
 }
 
-void media_numFilhos(Prefeitura registro[], int tam)
-{
-    double media = 0;
-
-    for (int i = 0; i < tam; i++)
-    {
-        media += registro[i].num_filhos;
+void imprimePessoas(Pessoa *p, int tam) {
+    for (int i = 0; i < tam; i ++) {
+        printf("Salario: %.2f\tNumero de Filhos: %d\n", p[i].salario, p[i].numFilhos);
     }
-
-    printf("A media de filhos e igual a: %.2f\n", media / 6);
 }
 
-void mediaSalario(Prefeitura registro[], int tam)
-{
-    double media = 0;
-
-    for (int i = 0; i < tam; i++)
-    {
-        media += registro[i].salario;
+void mediaSalario(Pessoa *pessoas, int tam, float *mediaSal) {
+    for (int i = 0; i < tam; i ++) {
+        *mediaSal += pessoas[i].salario;
     }
-
-    printf("A media de salario e igual a: %.2f\n", media / 6);
+    *mediaSal /= tam;
 }
 
-Prefeitura maiorSalario(Prefeitura *registro, int tam)
-{
-    Prefeitura p;
-    p.salario = 0;
+void mediaFilho(Pessoa *pessoas, int tam, int *mediaFilhos) {
+    for (int i = 0; i < tam; i ++) {
+        *mediaFilhos += pessoas[i].numFilhos;
+    }
+    *mediaFilhos /= tam;
+}
 
-    for (int i = 0; i < tam; i++)
-    {
-        if (registro[i].salario > p.salario)
-        {
-            p.salario = registro[i].salario;
+void senso(Pessoa *pessoas, int tam, float *mediaSal, int *mediaFilhos, float *maiorSal, float *percentual) {
+    mediaSalario(pessoas, tam, mediaSal);
+    mediaFilho(pessoas, tam, mediaFilhos);
+    maiorSalario(pessoas, tam, maiorSal);
+    percentualSalario(pessoas, tam, percentual, 350);
+}
+
+void maiorSalario(Pessoa *pessoas, int tam, float *maiorSal) {
+    for(int i = 0; i < tam; i ++) {
+        if(pessoas[i].salario > *maiorSal) {
+            *maiorSal = pessoas[i].salario;
         }
     }
-
-    return p;
 }
 
-void percentual(Prefeitura registro[], int tam)
-{
-    double percentual = 0, aux;
-
-    for (int i = 0; i < tam; i++)
-    {
-        if (registro[i].salario > 350.00)
-        {
-            percentual++;
+void percentualSalario(Pessoa *pessoas, int tam, float *percentual, float salBase) {
+    int aux = 0;
+    for(int i = 0; i < tam; i ++) {
+        if(pessoas[i].salario <= salBase) {
+            aux ++;
         }
     }
-
-    aux = (percentual * 100) / 6;
-
-    printf("O percentual de pessoas com salario ate R$350,00 e: %.2f%%\n", aux);
+    *percentual = (aux * 100) / tam;
 }
+
+
+
+
