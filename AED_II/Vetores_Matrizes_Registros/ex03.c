@@ -41,7 +41,8 @@ void preencheMatrizPonteiro(int linhas, int colunas, int *p)
             {
                 *(p + i * linhas + j) = 1;
             }
-            else {
+            else
+            {
                 *(p + i * linhas + j) = 0;
             }
         }
