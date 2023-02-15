@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 void imprimeVetor(int *v, int tam);
 void preencheVetor(int *v, int tam);
