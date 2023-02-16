@@ -10,7 +10,7 @@ void display(char array[][30])
     {
         printf("%s ", array[i]);
     }
-    printf("\n");
+    printf("\n\n");
 }
 
 int main()
