@@ -10,7 +10,7 @@ int main()
 {
     int tam, maior = 0, menor = 1000;
 
-    printf("Digite o tamanho do seu vetor:\n");
+    printf("Digite o tamanho do seu vetor: ");
     scanf("%d", &tam);
 
     int v[tam];
@@ -24,29 +24,34 @@ int main()
     return 0;
 }
 
-void preencheVetor(int *v, int tam) {
-    for (int i = 0; i < tam; i ++) {
-        *(v+i) = rand() % 100;
+void preencheVetor(int *v, int tam)
+{
+    for (int i = 0; i < tam; i++)
+    {
+        *(v + i) = rand() % 100;
     }
 }
 
-void imprimeVetor(int *v, int tam) {
-    for(int i = 0; i < tam; i++) {
-        printf("%d\t", *(v+i));
+void imprimeVetor(int *v, int tam)
+{
+    for (int i = 0; i < tam; i++)
+    {
+        printf("%d\t", *(v + i));
     }
     printf("\n");
 }
 
-void retornaMaiorMenor(int *v, int tam, int *menor, int *maior) {
-    for(int i = 0; i < tam; i ++) {
-        if(*(v+i) < *menor) {
-            *menor = *(v+i);
+void retornaMaiorMenor(int *v, int tam, int *menor, int *maior)
+{
+    for (int i = 0; i < tam; i++)
+    {
+        if (*(v + i) < *menor)
+        {
+            *menor = *(v + i);
         }
-        if(*(v+i) > *maior) {
-            *maior = *(v+i);
+        if (*(v + i) > *maior)
+        {
+            *maior = *(v + i);
         }
     }
 }
-
-
-
