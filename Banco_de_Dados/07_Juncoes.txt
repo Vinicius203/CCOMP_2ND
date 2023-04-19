@@ -1,0 +1,18 @@
+Atividade 07 BD - Junções
+
+A) select aeronave.num_prefixo, companhia.nom_companhia from aeronave NATURAL JOIN companhia;
+
+B) select voo.num_voo, voo.vlr_preco, voo.vlr_distancia from voo INNER JOIN aeroporto ON cod_aeroporto_origem = cod_aeroporto WHERE aeroporto.nom_cidade = 'BELO HORIZONTE'
+
+C) select voo.num_voo, voo.vlr_preco, voo.vlr_distancia, aeroporto.nom_aeroporto from voo INNER JOIN aeroporto ON cod_aeroporto_destino = cod_aeroporto WHERE aeroporto.nom_cidade = 'BELO HORIZONTE';
+
+D) select tripulante.nom_tripulante, cargo.nom_cargo from tripulante INNER JOIN cargo ON tripulante.cod_cargo = cargo.cod_cargo INNER JOIN base ON tripulante.cod_base = base.cod_base WHERE ind_base = 'D';
+
+E) select aeroporto.nom_aeroporto from aeroporto ao JOIN voo ON voo.cod_aeroporto_origem  = ao.cod_aeroporto JOIN aeroporto ad ON voo.cod_aeroporto_destino  = ao.cod_aeroporto;
+
+
+
+
+
+
+
