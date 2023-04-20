@@ -8,7 +8,7 @@ C) select voo.num_voo, voo.vlr_preco, voo.vlr_distancia, aeroporto.nom_aeroporto
 
 D) select tripulante.nom_tripulante, cargo.nom_cargo from tripulante INNER JOIN cargo ON tripulante.cod_cargo = cargo.cod_cargo INNER JOIN base ON tripulante.cod_base = base.cod_base WHERE ind_base = 'D';
 
-E) select aeroporto.nom_aeroporto from aeroporto ao JOIN voo ON voo.cod_aeroporto_origem  = ao.cod_aeroporto JOIN aeroporto ad ON voo.cod_aeroporto_destino  = ao.cod_aeroporto;
+E) select ao.nom_aeroporto AS nome_aeroporto_origem, ad.nom_aeroporto AS nome_aeroporto_destino FROM voo JOIN aeroporto AS ao ON voo.cod_aeroporto_origem = ao.cod_aeroporto JOIN aeroporto AS ad ON voo.cod_aeroporto_destino = ad.cod_aeroporto WHERE voo.vlr_distancia < 500;
 
 
 
