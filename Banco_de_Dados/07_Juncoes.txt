@@ -10,9 +10,8 @@ D) select tripulante.nom_tripulante, cargo.nom_cargo from tripulante INNER JOIN 
 
 E) select ao.nom_aeroporto AS nome_aeroporto_origem, ad.nom_aeroporto AS nome_aeroporto_destino FROM voo JOIN aeroporto AS ao ON voo.cod_aeroporto_origem = ao.cod_aeroporto JOIN aeroporto AS ad ON voo.cod_aeroporto_destino = ad.cod_aeroporto WHERE voo.vlr_distancia < 500;
 
+F) select voo.num_voo, ao.nom_aeroporto AS nome_aeroporto_origem, ad.nom_aeroporto AS nome_aeroporto_destino FROM voo JOIN aeroporto AS ao ON voo.cod_aeroporto_origem = ao.cod_aeroporto JOIN aeroporto AS ad ON voo.cod_aeroporto_destino = ad.cod_aeroporto WHERE ao.nom_pais = 'BRASIL';
 
+G) select aeroporto.nom_aeroporto, aeroporto.nom_pais from aeroporto JOIN voo ON cod_aeroporto = cod_aeroporto_destino JOIN programacao ON voo.num_voo = programacao.num_voo WHERE dat_voo BETWEEN '2006-01-01' and '2006-12-31' ORDER BY aeroporto.nom_pais, aeroporto.nom_aeroporto;
 
-
-
-
-
+H) select COUNT(*) from escala e INNER JOIN aeroporto a ON e.cod_aeroporto = a.cod_aeroporto WHERE a.nom_cidade = 'SAO PAULO' and e.dat_voo BETWEEN '2004-01-01' and '2006-12-31';
