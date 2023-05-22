@@ -22,9 +22,7 @@ int main()
     insereVetor(salario, tam);
     imprimeVetor(salario, tam);
 
-    pivo = rand() % tam - 1;
-    trocar(salario, pivo, 0);
-    quickSort(salario, pivo, tam - 1);
+    quickSort(salario, 0, tam - 1);
 
     imprimeVetor(salario, tam);
 }
@@ -57,19 +55,21 @@ void trocar(float *salario, int i, int j)
 
 int particiona(float *salario, int esq, int dir)
 {
-    int i = esq, j = dir, x = salario[esq];
+    int r = rand() % (dir - esq + 1) + esq;
+    trocar(salario, r, dir);
+    int i = esq, j = dir - 1, x = salario[dir];
 
-    while (i < j)
+    while (i <= j)
     {
-        while ((salario[i] <= x) && (i < dir))
+        while (i <= j && salario[i] < x)
             i++;
-        while (salario[j] > x)
+        while (i <= j && salario[j] >= x)
             j--;
         if (i < j)
             trocar(salario, i, j);
     }
-    trocar(salario, esq, j);
-    return j;
+    trocar(salario, i, dir);
+    return i;
 }
 
 void quickSort(float *salario, int esq, int dir)
