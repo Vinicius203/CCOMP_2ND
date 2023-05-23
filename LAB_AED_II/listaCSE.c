@@ -12,24 +12,24 @@ typedef struct
     No *inicio;
     No *fim;
     int tam;
-} ListaLSE;
+} ListaCSE;
 
 // Funções de manipulação
-void cria(ListaLSE *l);
-int insere(ListaLSE *l, int dado);
-int insereOrdenado(ListaLSE *l, int dado);
-int retira(ListaLSE *l, int dado);
+void cria(ListaCSE *l);
+int insere(ListaCSE *l, int dado);
+int insereOrdenado(ListaCSE *l, int dado);
+int retira(ListaCSE *l, int dado);
 
 // Funções de visualização
-int estaVazia(ListaLSE l);
-int getInicio(ListaLSE l);
-int getFim(ListaLSE l);
-int getTamanho(ListaLSE l);
-void mostra(ListaLSE l);
+int estaVazia(ListaCSE l);
+int getInicio(ListaCSE l);
+int getFim(ListaCSE l);
+int getTamanho(ListaCSE l);
+void mostra(ListaCSE l);
 
 int main()
 {
-    ListaLSE l;
+    ListaCSE l;
     int dado, sucesso, opcao;
 
     cria(&l);
@@ -70,39 +70,39 @@ int main()
     return 0;
 }
 
-void cria(ListaLSE *l)
+void cria(ListaCSE *l)
 {
     l->inicio = NULL;
     l->fim = NULL;
     l->tam = 0;
 }
 
-int insere(ListaLSE *l, int dado)
+int insere(ListaCSE *l, int dado)
 {
     No *aux = (No *)malloc(sizeof(No));
     if (aux == NULL)
         return 0;
 
     aux->dado = dado;
-    aux->prox = NULL;
-
     l->tam++;
 
     if (l->inicio == NULL)
     {
         l->inicio = aux;
         l->fim = aux;
+        aux->prox = l->inicio;
+
+        return 1;
     }
-    else
-    {
-        l->fim->prox = aux;
-        l->fim = aux;
-    }
+
+    aux->prox = l->inicio;
+    l->fim->prox = aux;
+    l->fim = aux;
 
     return 1;
 }
 
-int insereOrdenado(ListaLSE *l, int dado)
+int insereOrdenado(ListaCSE *l, int dado)
 {
     No *aux = (No *)malloc(sizeof(No));
     if (aux == NULL)
@@ -113,18 +113,19 @@ int insereOrdenado(ListaLSE *l, int dado)
 
     if (l->inicio == NULL)
     {
-        aux->prox = NULL;
         l->inicio = aux;
         l->fim = aux;
+        aux->prox = l->inicio;
     }
     else if (dado < l->inicio->dado)
     {
         aux->prox = l->inicio;
         l->inicio = aux;
+        l->fim->prox = l->inicio;
     }
     else if (dado > l->fim->dado)
     {
-        aux->prox = NULL;
+        aux->prox = l->inicio;
         l->fim->prox = aux;
         l->fim = aux;
     }
@@ -146,7 +147,7 @@ int insereOrdenado(ListaLSE *l, int dado)
     return 1;
 }
 
-int retira(ListaLSE *l, int dado)
+int retira(ListaCSE *l, int dado)
 {
     No *aux;
     No *auxFim;
@@ -172,6 +173,7 @@ int retira(ListaLSE *l, int dado)
     {
         aux = l->inicio;
         l->inicio = aux->prox;
+        l->fim->prox = l->inicio;
         free(aux);
         l->tam--;
 
@@ -180,19 +182,18 @@ int retira(ListaLSE *l, int dado)
 
     if (dado == l->fim->dado)
     {
-        aux = l->inicio;
-        auxFim = l->inicio->prox;
+        aux = l->fim;
+        auxFim = l->inicio;
 
-        while (auxFim != l->fim)
+        while (auxFim->prox != l->fim)
         {
-            aux = aux->prox;
             auxFim = auxFim->prox;
         }
 
-        aux->prox = NULL;
-        l->fim = aux;
+        auxFim->prox = l->inicio;
+        l->fim = auxFim;
 
-        free(auxFim);
+        free(aux);
         l->tam--;
 
         return 1;
@@ -220,27 +221,27 @@ int retira(ListaLSE *l, int dado)
     return 1;
 }
 
-int estaVazia(ListaLSE l)
+int estaVazia(ListaCSE l)
 {
     return l.inicio == NULL;
 }
 
-int getInicio(ListaLSE l)
+int getInicio(ListaCSE l)
 {
     return l.inicio->dado;
 }
 
-int getFim(ListaLSE l)
+int getFim(ListaCSE l)
 {
     return l.fim->dado;
 }
 
-int getTamanho(ListaLSE l)
+int getTamanho(ListaCSE l)
 {
     return l.tam;
 }
 
-void mostra(ListaLSE l)
+void mostra(ListaCSE l)
 {
     No *aux;
 
@@ -252,10 +253,10 @@ void mostra(ListaLSE l)
     {
         printf("\nExibindo lista do inicio ao fim:\n\n");
         aux = l.inicio;
-        while (aux != NULL)
+        do
         {
             printf("Dado: %d\n", aux->dado);
             aux = aux->prox;
-        }
+        } while (aux != l.inicio);
     }
 }
