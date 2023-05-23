@@ -23,3 +23,8 @@ AED_II/Sorts/exercicio
 .gitignore
 AED_II/Sorts/output/exercicio.exe
 
+LAB_AED_II/output/listaCSE.exe
+.gitignore
+LAB_AED_II/listaCSE.exe
+LAB_AED_II/output/listaCDE.exe
+LAB_AED_II/listaCDE.exe
