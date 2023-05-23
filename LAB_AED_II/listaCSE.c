@@ -58,7 +58,7 @@ int main()
 
         mostra(l);
 
-        printf("\nDeseja remover mais algum elemento? \n1 - sim \n2 - nao\n");
+        printf("\nDeseja remover mais algum elemento? \n1 - Sim \n2 - Nao\n");
         scanf("%d", &opcao);
     }
 
